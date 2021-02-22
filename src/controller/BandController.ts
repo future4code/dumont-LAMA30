@@ -5,6 +5,7 @@ import { Authenticator } from "../business/services/Authenticator";
 import { HashManager } from "../business/services/HashManager";
 import { IdGenerator } from "../business/services/IdGenerator";
 import { BandDatabase } from "../data/BandDatabase";
+import BaseDataBase from "../data/BaseDatabase";
 
 const bandBusiness = new BandBusiness(
    new IdGenerator(),
@@ -25,7 +26,9 @@ export class BandController{
             }
             await bandBusiness.registerBand(band, token)
            
-            res.status(200).send("Band created successfully!");
+            res
+            .status(200)
+            .send("Band created successfully!");
         }
         catch(e){
             res
@@ -39,9 +42,9 @@ export class BandController{
             
             const band = await bandBusiness.getBandDetailByNameOrId(input)
 
-           res.status(200).send({
-            band
-           })
+           res
+           .status(200)
+           .send({band})
         }
         catch(e){
             res

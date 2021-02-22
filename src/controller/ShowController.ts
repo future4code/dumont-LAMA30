@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { showInputDTO } from "../business/entities/Show";
+import { DAY, showInputDTO } from "../business/entities/Show";
 import { Authenticator } from "../business/services/Authenticator";
 import { HashManager } from "../business/services/HashManager";
 import { IdGenerator } from "../business/services/IdGenerator";
 import { ShowBusiness } from "../business/ShowBusiness";
 import { BandDatabase } from "../data/BandDatabase";
+import BaseDataBase from "../data/BaseDatabase";
 import { ShowDatabase } from "../data/ShowDatabase";
 
 const showBusiness = new ShowBusiness(
@@ -29,7 +30,23 @@ export class ShowController{
 
             await showBusiness.createShow(input, token)
 
-            res.status(200).send("Show created successfully!")
+            res
+            .status(200)
+            .send("Show created successfully!")
+        }
+        catch(e){
+            res
+            .status(e.statusCode || 400)
+            .send({error: e.message});
+        }  
+    }
+    async getShowByDay(req: Request, res: Response){
+        try{
+            req.headers.authorization as string;
+
+            const weekDay = await showBusiness.getShowsByDay(req.query.weekDay as string)
+
+            res.status(200).send(weekDay)
         }
         catch(e){
             res

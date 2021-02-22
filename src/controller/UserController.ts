@@ -4,13 +4,14 @@ import { Authenticator } from "../business/services/Authenticator";
 import { HashManager } from "../business/services/HashManager";
 import { IdGenerator } from "../business/services/IdGenerator";
 import { UserBusiness } from "../business/userBusiness";
+import BaseDataBase from "../data/BaseDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 
 const userBusiness = new UserBusiness(
    new IdGenerator(),
    new HashManager,
    new Authenticator(),
-   new UserDatabase()
+   new UserDatabase(),
 );
 
 export class UserController {

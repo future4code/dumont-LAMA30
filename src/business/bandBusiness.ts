@@ -20,7 +20,7 @@ export class BandBusiness{
 
         const checkRole = this.authenticator.getData(token)
         
-        if(input.name || input.musicGenre || input.responsible){
+        if(!input.name || !input.musicGenre || !input.responsible){
             throw new CustomError(417, "Invalid input to registerBand")
         }
 

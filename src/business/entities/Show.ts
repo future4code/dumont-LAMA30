@@ -1,6 +1,7 @@
 import { CustomError } from "../error/CustomError";
 
 export class Show {
+    
     static getShow(): Show {
         throw new Error("Method not implemented.");
     }
@@ -15,22 +16,12 @@ export class Show {
        public readonly bandId: string
     ) { }
 
-    public static toWeekDayEnum(data?: any): DAY {
-        switch(data){
-            case "FRIDAY":
-                return DAY.FRIDAY
-            case "SATURDAY":
-                return DAY.SATURDAY
-            case "MONDAY":
-                return DAY.MONDAY
-            default: 
-                throw new CustomError(417, "Invalid DAY")
-        }
-    }
+
     public static toShow(data? : any){
+
         return ( data && new Show(
             data.id,
-            data.toWeekDayEnum(data.weekDay || data.week_day),
+            data.weekDay || data.week_day,
             data.startTime || data.start_time,
             data.endTime || data.end_time,
             data.bandId || data.band_id
@@ -57,4 +48,9 @@ export interface showOutputDTO{
     weekDay: DAY,
     startTime: number,
     endTime: number
+}
+
+export interface showByDayOutputDTO{
+    name: string,
+    musicGenre: string
 }

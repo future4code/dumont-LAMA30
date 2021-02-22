@@ -38,9 +38,9 @@ export class ShowBusiness {
             throw new CustomError(404, "Band not found")
         }
 
-        const registeredShow = await this.showDatabase.getShowsByTime(input.weekDay, input.startTime, input.endTime)
+        const registeredShow = await this.showDatabase.getShowsByTimeAndDay(input.weekDay, input.startTime, input.endTime)
 
-        if (!registeredShow.length){
+        if (registeredShow.length){
             throw new CustomError(404, "No more shows can be created as this time")
         }
 
@@ -50,5 +50,12 @@ export class ShowBusiness {
                ...input
             })
         )
+    }
+    public async getShowsByDay(weekDay: string){
+        
+        if(!weekDay){
+            throw new CustomError(417, "Invalid input to getShowsByDay")
+        }
+        return await this.showDatabase.getShowByDay(weekDay)
     }
 }
